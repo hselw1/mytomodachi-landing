@@ -242,18 +242,28 @@
   }
 
   .form-success {
-    display: none;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.9rem 1.1rem;
-    background: rgba(76,175,80,0.1);
-    border: 1px solid rgba(76,175,80,0.25);
-    border-radius: var(--radius-sm);
-    font-size: 0.88rem;
-    color: var(--green);
-  }
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.9rem 1.1rem;
+  background: rgba(76,175,80,0.1);
+  border: 1px solid rgba(76,175,80,0.25);
+  border-radius: var(--radius-sm);
+  font-size: 0.88rem;
+  color: var(--green);
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 0.4s ease, max-height 0.4s ease, padding 0.4s ease;
+  padding-top: 0;
+  padding-bottom: 0;
+}
 
-  .form-success.visible { display: flex; }
+.form-success.visible {
+  opacity: 1;
+  max-height: 80px;
+  padding: 0.9rem 1.1rem;
+}
 
   .form-error {
     display: none;
@@ -811,19 +821,29 @@
   }
 
   .cta-success {
-    display: none;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
-    padding: 0.9rem 1.1rem;
-    background: rgba(76,175,80,0.1);
-    border: 1px solid rgba(76,175,80,0.25);
-    border-radius: var(--radius-sm);
-    font-size: 0.88rem;
-    color: var(--green);
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.9rem 1.1rem;
+  background: rgba(76,175,80,0.1);
+  border: 1px solid rgba(76,175,80,0.25);
+  border-radius: var(--radius-sm);
+  font-size: 0.88rem;
+  color: var(--green);
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 0.4s ease, max-height 0.4s ease, padding 0.4s ease;
+  padding-top: 0;
+  padding-bottom: 0;
+}
 
-  .cta-success.visible { display: flex; }
+.cta-success.visible {
+  opacity: 1;
+  max-height: 80px;
+  padding: 0.9rem 1.1rem;
+}
 
   /* ── FOOTER ── */
   footer {
@@ -1250,8 +1270,12 @@
       delete window[callbackName];
       document.head.removeChild(script);
       if (data.result === 'success' || data.msg.includes('already subscribed')) {
-        btn.closest('form').style.display = 'none';
-        successEl.classList.add('visible');
+        btn.closest('form').style.opacity = '0';
+        btn.closest('form').style.transition = 'opacity 0.3s ease';
+        setTimeout(() => {
+          btn.closest('form').style.display = 'none';
+          successEl.classList.add('visible');
+        }, 300);
         if (noteEl) noteEl.style.display = 'none';
       } else {
         btn.disabled = false;
