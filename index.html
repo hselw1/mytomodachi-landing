@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Tomodachi — AI Japanese Conversation Practice</title>
+<meta name="description" content="Practice real Japanese conversations with AI characters. Adjusts to your JLPT level. iOS app coming soon.">
+<meta property="og:title" content="My Tomodachi — AI Japanese Conversation Practice">
+<meta property="og:description" content="Practice real Japanese conversations with AI characters. Adjusts to your JLPT level. iOS app coming soon.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mytomodachi.app">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:          #0d0d14;
+    --bg-card:     #13131f;
+    --bg-elevated: #1a1a2a;
+    --border:      #1e1e2e;
+    --border-soft: #2a2a3a;
+    --text:        #ffffff;
+    --text-soft:   #aaaaaa;
+    --text-muted:  #666666;
+    --text-faint:  #444444;
+    --red:         #e94560;
+    --red-dark:    #c73350;
+    --red-faint:   rgba(233,69,96,0.12);
+    --red-border:  rgba(233,69,96,0.25);
+    --purple:      #7c3aed;
+    --purple-light:#b38fff;
+    --purple-faint:rgba(124,58,237,0.12);
+    --green:       #4caf50;
+    --radius:      12px;
+    --radius-sm:   8px;
+    --shadow:      0 4px 24px rgba(0,0,0,0.4);
+    --shadow-lg:   0 8px 48px rgba(0,0,0,0.6);
+  }
+
+  html { font-size: 16px; scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* Subtle grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page-wrap { position: relative; z-index: 1; }
+
+  /* ── NAV ── */
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.1rem 2rem;
+    border-bottom: 1px solid var(--border);
+    background: rgba(13,13,20,0.92);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .nav-brand {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    text-decoration: none;
+    color: var(--text);
+  }
+
+  .nav-brand-en {
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .nav-brand-jp {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+  }
+
+  .nav-badge {
+    font-size: 0.68rem;
+    font-weight: 500;
+    background: var(--red-faint);
+    color: var(--red);
+    border: 1px solid var(--red-border);
+    padding: 0.25rem 0.7rem;
+    border-radius: 100px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 5rem 2rem 4rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--red);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+    background: var(--red-faint);
+    border: 1px solid var(--red-border);
+    padding: 0.3rem 0.75rem;
+    border-radius: 100px;
+  }
+
+  .hero-eyebrow-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--red);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.7); }
+  }
+
+  .hero-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(2.4rem, 4vw, 3.2rem);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-title-sub {
+    font-size: clamp(1.2rem, 2vw, 1.5rem);
+    font-weight: 300;
+    color: var(--text-soft);
+    line-height: 1.4;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  .hero-desc {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.75;
+    margin-bottom: 2.5rem;
+    font-weight: 400;
+  }
+
+  /* ── FORM ── */
+  .waitlist-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .form-row {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .form-input {
+    flex: 1;
+    height: 46px;
+    padding: 0 1rem;
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-sm);
+    background: var(--bg-card);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+
+  .form-input::placeholder { color: var(--text-faint); }
+
+  .form-input:focus {
+    border-color: var(--red);
+    box-shadow: 0 0 0 3px rgba(233,69,96,0.1);
+  }
+
+  .form-btn {
+    height: 46px;
+    padding: 0 1.4rem;
+    background: var(--red);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.15s, transform 0.1s;
+    letter-spacing: 0.01em;
+  }
+
+  .form-btn:hover { background: var(--red-dark); }
+  .form-btn:active { transform: scale(0.97); }
+  .form-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  .form-note {
+    font-size: 0.75rem;
+    color: var(--text-faint);
+  }
+
+  .form-success {
+    display: none;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.9rem 1.1rem;
+    background: rgba(76,175,80,0.1);
+    border: 1px solid rgba(76,175,80,0.25);
+    border-radius: var(--radius-sm);
+    font-size: 0.88rem;
+    color: var(--green);
+  }
+
+  .form-success.visible { display: flex; }
+
+  .form-error {
+    display: none;
+    font-size: 0.8rem;
+    color: var(--red);
+    padding: 0.4rem 0;
+  }
+
+  .form-error.visible { display: block; }
+
+  /* ── PHONE MOCKUP ── */
+  .hero-visual { position: relative; }
+
+  .phone-frame {
+    width: 256px;
+    margin: 0 auto;
+    background: #1a1a2a;
+    border-radius: 36px;
+    padding: 10px;
+    box-shadow: var(--shadow-lg), 0 0 0 1px var(--border);
+    position: relative;
+  }
+
+  .phone-screen {
+    background: var(--bg);
+    border-radius: 28px;
+    overflow: hidden;
+    aspect-ratio: 9/19.5;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border);
+  }
+
+  .phone-notch {
+    height: 28px;
+    background: #1a1a2a;
+    border-radius: 0 0 16px 16px;
+    width: 110px;
+    margin: 0 auto;
+    flex-shrink: 0;
+  }
+
+  .phone-header {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 10px;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .phone-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--red), #c73350);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Noto Serif JP', serif;
+    font-size: 11px;
+    color: white;
+    flex-shrink: 0;
+    border: 1px solid var(--border);
+  }
+
+  .phone-persona-info { flex: 1; }
+
+  .phone-persona-name {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.2;
+  }
+
+  .phone-persona-sub {
+    font-size: 8px;
+    color: var(--text-muted);
+    line-height: 1.2;
+  }
+
+  .phone-jlpt {
+    font-size: 8px;
+    font-weight: 600;
+    background: var(--purple-faint);
+    color: var(--purple-light);
+    border: 1px solid rgba(124,58,237,0.2);
+    padding: 2px 5px;
+    border-radius: 4px;
+    letter-spacing: 0.05em;
+  }
+
+  .phone-content {
+    flex: 1;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    overflow: hidden;
+  }
+
+  .chat-bubble {
+    max-width: 85%;
+    padding: 7px 9px;
+    border-radius: 10px;
+    font-size: 8.5px;
+    line-height: 1.55;
+  }
+
+  .bubble-ai {
+    background: var(--bg-card);
+    color: var(--text);
+    align-self: flex-start;
+    border: 1px solid var(--border);
+    border-bottom-left-radius: 3px;
+    font-family: 'Noto Serif JP', serif;
+  }
+
+  .bubble-user {
+    background: var(--red);
+    color: white;
+    align-self: flex-end;
+    margin-left: auto;
+    border-bottom-right-radius: 3px;
+    font-family: 'Noto Serif JP', serif;
+  }
+
+  .bubble-en {
+    font-size: 6.5px;
+    color: var(--text-muted);
+    font-style: italic;
+    margin-top: 3px;
+    font-family: 'Inter', sans-serif;
+    border-top: 1px solid var(--border);
+    padding-top: 3px;
+  }
+
+  .phone-mic-bar {
+    padding: 8px 10px;
+    background: var(--bg-card);
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+
+  .phone-mic-circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 1px solid var(--border-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .phone-furigana-btn {
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    background: var(--purple-faint);
+    border: 1px solid rgba(124,58,237,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 7px;
+    color: var(--purple-light);
+    font-family: 'Noto Serif JP', serif;
+  }
+
+  /* floating badges */
+  .float-badge {
+    position: absolute;
+    background: var(--bg-card);
+    border: 1px solid var(--border-soft);
+    border-radius: 10px;
+    padding: 7px 11px;
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.72rem;
+    font-weight: 500;
+    white-space: nowrap;
+    animation: floatBadge 3s ease-in-out infinite;
+  }
+
+  @keyframes floatBadge {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  .badge-tl { top: 20px; left: -44px; animation-delay: 0s; }
+  .badge-br { bottom: 50px; right: -44px; animation-delay: 1.5s; }
+
+  .badge-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+  }
+
+  .badge-label { font-size: 0.7rem; font-weight: 600; color: var(--text); line-height: 1.2; }
+  .badge-sub { font-size: 0.62rem; color: var(--text-muted); line-height: 1.2; }
+
+  /* ── STATS STRIP ── */
+  .stats-strip {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 1.1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+    background: var(--bg-card);
+  }
+
+  .stat-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+  }
+
+  .stat-icon { font-size: 1rem; }
+
+  /* ── FEATURES ── */
+  .features {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 5rem 2rem;
+  }
+
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 0.75rem;
+  }
+
+  .section-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--text);
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+  }
+
+  .section-sub {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    font-weight: 400;
+    max-width: 520px;
+    line-height: 1.75;
+    margin-bottom: 3rem;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .feature-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.6rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .feature-card:hover {
+    border-color: var(--border-soft);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+  }
+
+  .feature-icon-wrap {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    margin-bottom: 1rem;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+  }
+
+  .feature-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  .feature-desc {
+    font-size: 0.83rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    font-weight: 400;
+  }
+
+  /* ── PERSONAS ── */
+  .personas {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 5rem 2rem;
+    background: var(--bg-card);
+  }
+
+  .personas-inner { max-width: 1000px; margin: 0 auto; }
+
+  .personas-scroll {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    padding-bottom: 1rem;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    scroll-snap-type: x mandatory;
+  }
+
+  .personas-scroll::-webkit-scrollbar { display: none; }
+
+  .persona-card {
+    flex: 0 0 190px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.4rem 1.2rem;
+    scroll-snap-align: start;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .persona-card:hover {
+    border-color: var(--red-border);
+    box-shadow: 0 0 0 1px var(--red-border), var(--shadow);
+  }
+
+  .persona-card-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--red), #c73350);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Noto Serif JP', serif;
+    font-size: 1rem;
+    color: white;
+    margin-bottom: 0.9rem;
+    border: 2px solid var(--border);
+  }
+
+  .persona-card-name {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.1rem;
+  }
+
+  .persona-card-jp {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    margin-bottom: 0.6rem;
+    letter-spacing: 0.05em;
+  }
+
+  .persona-card-desc {
+    font-size: 0.76rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .persona-dialect {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 500;
+    background: var(--red-faint);
+    color: var(--red);
+    border: 1px solid var(--red-border);
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    margin-top: 0.6rem;
+    letter-spacing: 0.02em;
+  }
+
+  /* ── HOW IT WORKS ── */
+  .how {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 5rem 2rem;
+  }
+
+  .how-steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 3rem;
+    position: relative;
+  }
+
+  .how-steps::before {
+    content: '';
+    position: absolute;
+    top: 21px;
+    left: calc(16.66% + 12px);
+    right: calc(16.66% + 12px);
+    height: 1px;
+    background: var(--border-soft);
+  }
+
+  .how-step { text-align: center; }
+
+  .step-num {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--bg-card);
+    border: 1px solid var(--border-soft);
+    color: var(--text);
+    font-size: 0.88rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.25rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .step-title {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+
+  .step-desc {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  /* ── CTA ── */
+  .cta-section {
+    background: var(--bg-card);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 5rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: '友';
+    position: absolute;
+    font-family: 'Noto Serif JP', serif;
+    font-size: 300px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.018);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    user-select: none;
+    line-height: 1;
+  }
+
+  .cta-inner { max-width: 520px; margin: 0 auto; position: relative; }
+
+  .cta-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    font-weight: 700;
+    line-height: 1.25;
+    margin-bottom: 1rem;
+    color: var(--text);
+    letter-spacing: -0.02em;
+  }
+
+  .cta-sub {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    font-weight: 400;
+    margin-bottom: 2.5rem;
+    line-height: 1.75;
+  }
+
+  .cta-form { display: flex; gap: 0.5rem; }
+
+  .cta-input {
+    flex: 1;
+    height: 48px;
+    padding: 0 1rem;
+    background: var(--bg);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  .cta-input::placeholder { color: var(--text-faint); }
+
+  .cta-input:focus {
+    border-color: var(--red);
+    box-shadow: 0 0 0 3px rgba(233,69,96,0.1);
+  }
+
+  .cta-btn {
+    height: 48px;
+    padding: 0 1.5rem;
+    background: var(--red);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.15s, transform 0.1s;
+  }
+
+  .cta-btn:hover { background: var(--red-dark); }
+  .cta-btn:active { transform: scale(0.97); }
+  .cta-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  .cta-note {
+    font-size: 0.75rem;
+    color: var(--text-faint);
+    margin-top: 0.75rem;
+  }
+
+  .cta-success {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 0.9rem 1.1rem;
+    background: rgba(76,175,80,0.1);
+    border: 1px solid rgba(76,175,80,0.25);
+    border-radius: var(--radius-sm);
+    font-size: 0.88rem;
+    color: var(--green);
+  }
+
+  .cta-success.visible { display: flex; }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 1.75rem 2rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-brand {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    font-size: 0.83rem;
+    color: var(--text-muted);
+  }
+
+  .footer-brand strong { color: var(--text); font-weight: 600; }
+
+  .footer-jp {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 0.68rem;
+    color: var(--text-faint);
+  }
+
+  .footer-links { display: flex; gap: 1.5rem; list-style: none; }
+
+  .footer-links a {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .footer-links a:hover { color: var(--text); }
+
+  /* ── ANIMATIONS ── */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .hero {
+      grid-template-columns: 1fr;
+      padding: 3rem 1.5rem 2rem;
+      gap: 3rem;
+    }
+
+    .hero-visual { order: -1; }
+    .phone-frame { width: 220px; }
+    .badge-tl { left: -10px; }
+    .badge-br { right: -10px; }
+    .features-grid { grid-template-columns: 1fr 1fr; }
+    .how-steps { grid-template-columns: 1fr; }
+    .how-steps::before { display: none; }
+    .cta-form { flex-direction: column; }
+    .form-row { flex-direction: column; }
+    nav { padding: 1rem 1.5rem; }
+    .stats-strip { gap: 1.5rem; }
+    footer { flex-direction: column; align-items: flex-start; }
+  }
+
+  @media (max-width: 500px) {
+    .features-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+
+<body>
+<div class="page-wrap">
+
+  <!-- ── NAV ── -->
+  <nav>
+    <a href="/" class="nav-brand">
+      <span class="nav-brand-en">My Tomodachi</span>
+      <span class="nav-brand-jp">マイ・トモダチ</span>
+    </a>
+    <span class="nav-badge">iOS Coming Soon</span>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section class="hero">
+    <div class="hero-left fade-in">
+      <div class="hero-eyebrow">
+        <span class="hero-eyebrow-dot"></span>
+        Early access open
+      </div>
+      <h1 class="hero-title">話せるように<br>なろう。</h1>
+      <p class="hero-title-sub">Actually practice speaking Japanese.</p>
+      <p class="hero-desc">
+        My Tomodachi pairs you with AI characters — a convenience store worker in Osaka, a salaryman in Tokyo, a retired fisherman in Hokkaido. Set your JLPT level. Have a real conversation. In Japanese.
+      </p>
+
+      <form class="waitlist-form" id="hero-form" novalidate>
+        <div class="form-row">
+          <input
+            type="email"
+            class="form-input"
+            id="hero-email"
+            placeholder="your@email.com"
+            autocomplete="email"
+            required
+          >
+          <button type="submit" class="form-btn" id="hero-btn">
+            Get Early Access
+          </button>
+        </div>
+        <p class="form-note">iOS app launching soon. No spam, ever.</p>
+        <p class="form-error" id="hero-error"></p>
+        <div class="form-success" id="hero-success">
+          <span>✓</span>
+          <span>You're on the list! We'll email you when it launches.</span>
+        </div>
+      </form>
+    </div>
+
+    <!-- Phone mockup -->
+    <div class="hero-visual fade-in" style="transition-delay: 0.2s;">
+      <div style="position: relative; display: flex; justify-content: center;">
+        <div class="phone-frame">
+          <div class="phone-screen">
+            <div class="phone-notch"></div>
+
+            <div class="phone-header">
+              <div class="phone-avatar" style="background:none;border:1px solid var(--border);overflow:hidden;padding:0;">
+                <img src="https://japanese-app-blue.vercel.app/yuki.png" alt="Yuki" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
+              </div>
+              <div class="phone-persona-info">
+                <div class="phone-persona-name">雪 (Yuki)</div>
+                <div class="phone-persona-sub">Osaka</div>
+              </div>
+              <span class="phone-jlpt">N4</span>
+            </div>
+
+            <div class="phone-content">
+              <div class="chat-bubble bubble-ai">
+                こんにちは！最近どうですか？
+                <div class="bubble-en">Hey! How have you been lately?</div>
+              </div>
+              <div class="chat-bubble bubble-user">
+                元気です！日本語の練習をしています
+              </div>
+              <div class="chat-bubble bubble-ai">
+                そうですか！めっちゃすごいですね。
+                <div class="bubble-en">Oh really! That's amazing!</div>
+              </div>
+              <div class="chat-bubble bubble-user">
+                ありがとう！
+              </div>
+              <div class="chat-bubble bubble-ai">
+                好きな食べ物は何ですか？
+                <div class="bubble-en">What's your favourite food?</div>
+              </div>
+            </div>
+
+            <div class="phone-mic-bar">
+              <div class="phone-furigana-btn">あ</div>
+              <div class="phone-mic-circle">
+                <svg width="10" height="12" viewBox="0 0 10 12" fill="none">
+                  <rect x="3" y="0" width="4" height="7" rx="2" fill="#666"/>
+                  <path d="M1 6c0 2.2 1.8 4 4 4s4-1.8 4-4" stroke="#666" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+                  <line x1="5" y1="10" x2="5" y2="12" stroke="#666" stroke-width="1.2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div style="width:20px;height:20px;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Floating badges -->
+        <div class="float-badge badge-tl">
+          <div class="badge-icon" style="color:var(--purple-light);font-family:'Noto Serif JP',serif;font-size:11px;">あ</div>
+          <div>
+            <div class="badge-label">Furigana</div>
+            <div class="badge-sub">tap to toggle</div>
+          </div>
+        </div>
+
+        <div class="float-badge badge-br">
+          <div class="badge-icon">🔊</div>
+          <div>
+            <div class="badge-label">Native audio</div>
+            <div class="badge-sub">Google Neural TTS</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── STATS STRIP ── -->
+  <div class="stats-strip">
+    <div class="stat-item">
+      <span class="stat-icon">🗾</span>
+      <span>6 AI characters with distinct personalities</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-icon">📚</span>
+      <span>N5 → N2 difficulty levels</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-icon">🎙️</span>
+      <span>Real voice input & output</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-icon">🇦🇺</span>
+      <span>Built by a learner, for learners</span>
+    </div>
+  </div>
+
+  <!-- ── FEATURES ── -->
+  <section class="features">
+    <div class="fade-in">
+      <p class="section-label">Why it works</p>
+      <h2 class="section-title">Designed for real<br>conversation practice</h2>
+      <p class="section-sub">Most apps teach vocabulary in isolation. My Tomodachi puts you in a real conversation — any time, any place.</p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card fade-in">
+        <div class="feature-icon-wrap">🎭</div>
+        <div class="feature-title">Six real characters</div>
+        <p class="feature-desc">Yuki in Osaka, Kenji the Tokyo salaryman, Hiroshi the Hokkaido fisherman. Each has a life, a dialect, and a personality — and they remember yours.</p>
+      </div>
+      <div class="feature-card fade-in" style="transition-delay:0.1s;">
+        <div class="feature-icon-wrap">📊</div>
+        <div class="feature-title">JLPT level matching</div>
+        <p class="feature-desc">Set N5 through N2 and the characters respond at exactly that level — vocabulary, kanji, grammar. No guessing at words you haven't learned yet.</p>
+      </div>
+      <div class="feature-card fade-in" style="transition-delay:0.2s;">
+        <div class="feature-icon-wrap" style="font-family:'Noto Serif JP',serif;font-size:15px;color:var(--purple-light);">あ</div>
+        <div class="feature-title">Furigana on demand</div>
+        <p class="feature-desc">One tap shows furigana above every kanji. Another tap hides it. Study with support, or test yourself without — your choice every message.</p>
+      </div>
+      <div class="feature-card fade-in" style="transition-delay:0s;">
+        <div class="feature-icon-wrap">🔊</div>
+        <div class="feature-title">Native-quality audio</div>
+        <p class="feature-desc">Every response is spoken aloud using Google Neural TTS voices. Hear the actual rhythm and intonation of natural Japanese, not robotic synthesis.</p>
+      </div>
+      <div class="feature-card fade-in" style="transition-delay:0.1s;">
+        <div class="feature-icon-wrap">🌐</div>
+        <div class="feature-title">Instant translation</div>
+        <p class="feature-desc">Don't understand a sentence? Tap translate for the full English meaning. Tap individual sentences to check them line by line. Never get stuck.</p>
+      </div>
+      <div class="feature-card fade-in" style="transition-delay:0.2s;">
+        <div class="feature-icon-wrap">🔥</div>
+        <div class="feature-title">Daily streak tracking</div>
+        <p class="feature-desc">Keep your streak alive. A small daily habit compounds fast — even five minutes of real conversation is more effective than thirty minutes of flashcards.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PERSONAS ── -->
+  <section class="personas">
+    <div class="personas-inner">
+      <div class="fade-in">
+        <p class="section-label">The characters</p>
+        <h2 class="section-title">Who will you practice with?</h2>
+        <p class="section-sub" style="margin-bottom:2rem;">Each character has a backstory, a dialect, and a life they'll tell you about. Scroll to meet them all.</p>
+      </div>
+      <div class="personas-scroll fade-in">
+        <div class="persona-card">
+          <div class="persona-card-avatar" style="background:none;border:2px solid var(--border);overflow:hidden;padding:0;">
+            <img src="https://japanese-app-blue.vercel.app/yuki.png" alt="Yuki" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
+          </div>
+          <div class="persona-card-name">Yuki</div>
+          <div class="persona-card-jp">ゆき・24歳・大阪</div>
+          <p class="persona-card-desc">Convenience store worker. Cheerful, chatty, loves anime and takoyaki.</p>
+          <span class="persona-dialect">Osaka dialect</span>
+        </div>
+        <div class="persona-card">
+          <div class="persona-card-avatar" style="background:none;border:2px solid var(--border);overflow:hidden;padding:0;">
+            <img src="https://japanese-app-blue.vercel.app/kenji.png" alt="Kenji" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
+          </div>
+          <div class="persona-card-name">Kenji</div>
+          <div class="persona-card-jp">けんじ・35歳・東京</div>
+          <p class="persona-card-desc">Tech salaryman. Polite but tired. Talks about his daughter Yui and weekend ramen.</p>
+          <span class="persona-dialect">Standard Tokyo</span>
+        </div>
+        <div class="persona-card">
+          <div class="persona-card-avatar" style="background:none;border:2px solid var(--border);overflow:hidden;padding:0;">
+            <img src="https://japanese-app-blue.vercel.app/hana.png" alt="Hana" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
+          </div>
+          <div class="persona-card-name">Hana</div>
+          <div class="persona-card-jp">はな・19歳・京都</div>
+          <p class="persona-card-desc">University student. Shy at first. Loves matcha, temple photography, and her friend Saki.</p>
+          <span class="persona-dialect">Soft Kyoto</span>
+        </div>
+        <div class="persona-card">
+          <div class="persona-card-avatar" style="background:none;border:2px solid var(--border);overflow:hidden;padding:0;">
+            <img src="https://japanese-app-blue.vercel.app/hiroshi.png" alt="Hiroshi" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
+          </div>
+          <div class="persona-card-name">Hiroshi</div>
+          <div class="persona-card-jp">ひろし・65歳・北海道</div>
+          <p class="persona-card-desc">Retired fisherman. Gruff but warm. Three grandchildren and a wife who cooks too much.</p>
+          <span class="persona-dialect">Hokkaido rough</span>
+        </div>
+        <div class="persona-card">
+          <div class="persona-card-avatar" style="background:none;border:2px solid var(--border);overflow:hidden;padding:0;">
+            <img src="https://japanese-app-blue.vercel.app/mizuki.png" alt="Mizuki" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
+          </div>
+          <div class="persona-card-name">Mizuki</div>
+          <div class="persona-card-jp">みずき・32歳・東京</div>
+          <p class="persona-card-desc">Luxury hotel concierge. Speaks only keigo. Graceful, polished, quietly formidable.</p>
+          <span class="persona-dialect">Formal keigo</span>
+        </div>
+        <div class="persona-card">
+          <div class="persona-card-avatar" style="background:none;border:2px solid var(--border);overflow:hidden;padding:0;">
+            <img src="https://japanese-app-blue.vercel.app/riku.png" alt="Riku" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
+          </div>
+          <div class="persona-card-name">Riku</div>
+          <div class="persona-card-jp">りく・28歳・東京</div>
+          <p class="persona-card-desc">Sushi apprentice. Intense and passionate. Learning from Yamamoto-san since age 18.</p>
+          <span class="persona-dialect">Direct craftsman</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── HOW IT WORKS ── -->
+  <section class="how fade-in">
+    <p class="section-label">How it works</p>
+    <h2 class="section-title">Simple to start.<br>Hard to put down.</h2>
+
+    <div class="how-steps">
+      <div class="how-step">
+        <div class="step-num">1</div>
+        <div class="step-title">Pick a character</div>
+        <p class="step-desc">Choose who you want to practice with and set your JLPT level. The conversation adjusts to match.</p>
+      </div>
+      <div class="how-step">
+        <div class="step-num">2</div>
+        <div class="step-title">Start talking</div>
+        <p class="step-desc">Type or speak in Japanese. Your character responds in character — with real vocabulary, real grammar, real audio.</p>
+      </div>
+      <div class="how-step">
+        <div class="step-num">3</div>
+        <div class="step-title">Learn as you go</div>
+        <p class="step-desc">Tap furigana, translate, or replay audio whenever you need it. Come back tomorrow to keep your streak.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA ── -->
+  <section class="cta-section">
+    <div class="cta-inner fade-in">
+      <h2 class="cta-title">Be first to practice.</h2>
+      <p class="cta-sub">Join the waitlist and get early access when the iOS app launches. No spam. Unsubscribe any time.</p>
+
+      <form class="cta-form" id="cta-form" novalidate>
+        <input
+          type="email"
+          class="cta-input"
+          id="cta-email"
+          placeholder="your@email.com"
+          autocomplete="email"
+          required
+        >
+        <button type="submit" class="cta-btn" id="cta-btn">
+          Join Waitlist
+        </button>
+      </form>
+      <p class="cta-note" id="cta-error-note">iOS app launching soon.</p>
+      <div class="cta-success" id="cta-success">
+        <span>✓</span>
+        <span>You're in! We'll email you when My Tomodachi launches.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <div class="footer-brand">
+      <strong>My Tomodachi</strong>
+      <span class="footer-jp">マイ・トモダチ</span>
+      <span style="color:var(--text-faint);">· mytomodachi.app</span>
+    </div>
+    <ul class="footer-links">
+      <li><a href="/privacy">Privacy</a></li>
+      <li><a href="/terms">Terms</a></li>
+      <li><a href="mailto:hello@mytomodachi.app">Contact</a></li>
+    </ul>
+  </footer>
+
+</div>
+
+<script>
+  const MAILCHIMP_URL = 'YOUR_MAILCHIMP_JSONP_URL_HERE';
+
+  function isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+  }
+
+  function submitToMailchimp(email, btn, successEl, errorEl, noteEl) {
+    if (!isValidEmail(email)) {
+      if (errorEl) { errorEl.textContent = 'Please enter a valid email address.'; errorEl.classList.add('visible'); }
+      return;
+    }
+    if (errorEl) errorEl.classList.remove('visible');
+
+    btn.disabled = true;
+    btn.textContent = 'Joining…';
+
+    if (MAILCHIMP_URL === 'YOUR_MAILCHIMP_JSONP_URL_HERE') {
+      setTimeout(() => {
+        btn.closest('form').style.display = 'none';
+        successEl.classList.add('visible');
+        if (noteEl) noteEl.style.display = 'none';
+      }, 600);
+      return;
+    }
+
+    const callbackName = 'mc_cb_' + Date.now();
+    const url = MAILCHIMP_URL.replace('/post-json?', '/post-json?').replace('&c=?', '') + '&EMAIL=' + encodeURIComponent(email) + '&c=' + callbackName;
+
+    window[callbackName] = function(data) {
+      delete window[callbackName];
+      document.head.removeChild(script);
+      if (data.result === 'success' || data.msg.includes('already subscribed')) {
+        btn.closest('form').style.display = 'none';
+        successEl.classList.add('visible');
+        if (noteEl) noteEl.style.display = 'none';
+      } else {
+        btn.disabled = false;
+        btn.textContent = btn.dataset.label || 'Get Early Access';
+        const msg = data.msg.includes('already subscribed') ? 'You\'re already on the list!' : 'Something went wrong. Try again?';
+        if (errorEl) { errorEl.textContent = msg; errorEl.classList.add('visible'); }
+      }
+    };
+
+    const script = document.createElement('script');
+    script.src = url;
+    script.onerror = function() {
+      btn.disabled = false;
+      btn.textContent = btn.dataset.label || 'Get Early Access';
+      if (errorEl) { errorEl.textContent = 'Connection error. Try again.'; errorEl.classList.add('visible'); }
+    };
+    document.head.appendChild(script);
+  }
+
+  const heroForm = document.getElementById('hero-form');
+  heroForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const email = document.getElementById('hero-email').value;
+    const btn = document.getElementById('hero-btn');
+    btn.dataset.label = 'Get Early Access';
+    submitToMailchimp(email, btn, document.getElementById('hero-success'), document.getElementById('hero-error'), null);
+  });
+
+  const ctaForm = document.getElementById('cta-form');
+  ctaForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const email = document.getElementById('cta-email').value;
+    const btn = document.getElementById('cta-btn');
+    btn.dataset.label = 'Join Waitlist';
+    submitToMailchimp(email, btn, document.getElementById('cta-success'), null, document.getElementById('cta-error-note'));
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

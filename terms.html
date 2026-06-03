@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms of Service — My Tomodachi</title>
+<meta name="description" content="Terms of Service for My Tomodachi — AI Japanese Conversation Practice">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:          #0d0d14;
+    --bg-card:     #13131f;
+    --bg-elevated: #1a1a2a;
+    --border:      #1e1e2e;
+    --border-soft: #2a2a3a;
+    --text:        #ffffff;
+    --text-soft:   #aaaaaa;
+    --text-muted:  #666666;
+    --text-faint:  #444444;
+    --red:         #e94560;
+    --red-faint:   rgba(233,69,96,0.12);
+    --red-border:  rgba(233,69,96,0.25);
+    --radius:      12px;
+    --radius-sm:   8px;
+  }
+
+  html { font-size: 16px; scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page-wrap { position: relative; z-index: 1; }
+
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.1rem 2rem;
+    border-bottom: 1px solid var(--border);
+    background: rgba(13,13,20,0.92);
+    backdrop-filter: blur(16px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .nav-brand {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    text-decoration: none;
+    color: var(--text);
+  }
+
+  .nav-brand-en { font-size: 1rem; font-weight: 600; letter-spacing: -0.01em; }
+
+  .nav-brand-jp {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+  }
+
+  .nav-back {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    border: 1px solid var(--border-soft);
+    padding: 0.3rem 0.8rem;
+    border-radius: var(--radius-sm);
+    transition: color 0.15s, border-color 0.15s;
+  }
+
+  .nav-back:hover { color: var(--text); border-color: var(--border); }
+
+  .content {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 4rem 2rem 6rem;
+  }
+
+  .doc-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 0.75rem;
+  }
+
+  .doc-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--text);
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+  }
+
+  .doc-meta {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .doc-intro {
+    font-size: 1rem;
+    color: var(--text-soft);
+    line-height: 1.8;
+    margin-bottom: 3rem;
+    padding: 1.5rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    border-left: 3px solid var(--red);
+  }
+
+  h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    letter-spacing: -0.01em;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  h3 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-soft);
+    margin-top: 1.5rem;
+    margin-bottom: 0.6rem;
+  }
+
+  p {
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+  }
+
+  ul {
+    margin: 0.5rem 0 1rem 0;
+    padding-left: 0;
+    list-style: none;
+  }
+
+  ul li {
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+    padding: 0.25rem 0 0.25rem 1.2rem;
+    position: relative;
+  }
+
+  ul li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--text-faint);
+    font-size: 0.8rem;
+  }
+
+  .highlight-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+    margin: 1.5rem 0;
+  }
+
+  .highlight-box p { margin-bottom: 0; }
+
+  .warning-box {
+    background: rgba(233,69,96,0.06);
+    border: 1px solid var(--red-border);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+    margin: 1.5rem 0;
+  }
+
+  .warning-box p { margin-bottom: 0; color: var(--text-soft); }
+
+  .contact-block {
+    background: var(--bg-card);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .contact-block h2 { margin-top: 0; }
+
+  a { color: var(--red); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  footer {
+    padding: 1.75rem 2rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-brand {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    font-size: 0.83rem;
+    color: var(--text-muted);
+  }
+
+  .footer-brand strong { color: var(--text); font-weight: 600; }
+
+  .footer-links { display: flex; gap: 1.5rem; list-style: none; }
+
+  .footer-links a {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .footer-links a:hover { color: var(--text); }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <nav>
+    <a href="/" class="nav-brand">
+      <span class="nav-brand-en">My Tomodachi</span>
+      <span class="nav-brand-jp">マイ・トモダチ</span>
+    </a>
+    <a href="/" class="nav-back">← Back</a>
+  </nav>
+
+  <div class="content">
+    <p class="doc-label">Legal</p>
+    <h1 class="doc-title">Terms of Service</h1>
+    <p class="doc-meta">Last updated: June 2026 &nbsp;·&nbsp; Effective: June 2026</p>
+
+    <div class="doc-intro">
+      These Terms of Service govern your use of My Tomodachi. By downloading, installing, or using the app or website, you agree to these terms. If you do not agree, please do not use the service. We have written these in plain English — if anything is unclear, email us at <a href="mailto:hello@mytomodachi.app">hello@mytomodachi.app</a>.
+    </div>
+
+    <h2>1. About My Tomodachi</h2>
+    <p>My Tomodachi is an AI-powered Japanese language conversation practice application. It allows users to have text and voice conversations with AI characters to improve their Japanese language skills. The service is operated by an independent developer based in Australia.</p>
+
+    <h2>2. Eligibility</h2>
+    <ul>
+      <li>You must be at least 13 years old to use My Tomodachi</li>
+      <li>Users aged 13–17 must have parental or guardian consent</li>
+      <li>By using the app you confirm that you meet these age requirements</li>
+      <li>We reserve the right to terminate accounts if we have reason to believe a user is under 13</li>
+    </ul>
+
+    <h2>3. Accounts</h2>
+    <p>Some features require creating an account. When you create an account you agree to:</p>
+    <ul>
+      <li>Provide accurate and truthful information</li>
+      <li>Keep your account credentials secure and confidential</li>
+      <li>Notify us immediately if you suspect unauthorised access to your account</li>
+      <li>Be responsible for all activity that occurs under your account</li>
+    </ul>
+    <p>We reserve the right to suspend or terminate accounts that violate these terms.</p>
+
+    <h2>4. Subscriptions and Payments</h2>
+
+    <h3>Free tier</h3>
+    <p>My Tomodachi offers a free tier with limited daily usage. The specific limits of the free tier may change over time with reasonable notice.</p>
+
+    <h3>Paid subscriptions</h3>
+    <p>Paid subscriptions are available through Apple's App Store in-app purchase system. By subscribing you agree to:</p>
+    <ul>
+      <li>Pay the subscription fee at the start of each billing period</li>
+      <li>Subscriptions automatically renew unless cancelled at least 24 hours before the end of the current period</li>
+      <li>Apple manages all billing — we do not have access to your payment information</li>
+      <li>Prices are shown in your local currency and may vary by region</li>
+    </ul>
+
+    <h3>Cancellation and refunds</h3>
+    <ul>
+      <li>You can cancel your subscription at any time through your Apple ID settings</li>
+      <li>Cancellation takes effect at the end of the current billing period — you retain access until then</li>
+      <li>Refunds are handled by Apple in accordance with their refund policy</li>
+      <li>We do not offer refunds directly — please contact Apple support for refund requests</li>
+    </ul>
+
+    <h3>Price changes</h3>
+    <p>We may change subscription prices with at least 30 days notice. Continued use after a price change constitutes acceptance of the new price.</p>
+
+    <h2>5. Acceptable Use</h2>
+    <p>You agree to use My Tomodachi only for lawful purposes and in accordance with these terms. You must not:</p>
+    <ul>
+      <li>Use the service to generate, store, or transmit content that is illegal, harmful, threatening, abusive, harassing, or defamatory</li>
+      <li>Attempt to extract, reproduce, or reverse engineer the AI models, personas, or underlying system prompts</li>
+      <li>Use the service to generate content intended to deceive, defraud, or mislead others</li>
+      <li>Attempt to bypass rate limits, usage restrictions, or security measures</li>
+      <li>Share your account credentials with others or allow others to use your account</li>
+      <li>Use automated scripts, bots, or other automated means to access the service</li>
+      <li>Attempt to overload or disrupt the service infrastructure</li>
+      <li>Use the service in any way that violates applicable laws or regulations</li>
+    </ul>
+
+    <h2>6. AI-Generated Content</h2>
+    <div class="warning-box">
+      <p>My Tomodachi uses artificial intelligence to generate conversation responses. AI-generated content may occasionally be inaccurate, inappropriate, or contain errors. The AI characters are fictional and their responses do not represent real people, organisations, or factual information.</p>
+    </div>
+    <ul>
+      <li>AI responses are generated automatically and we do not review every conversation</li>
+      <li>Do not rely on AI responses for medical, legal, financial, or safety-critical decisions</li>
+      <li>The Japanese language content is intended for practice purposes — always verify important language information with qualified sources</li>
+      <li>We reserve the right to modify, improve, or change the AI personas and their behaviour at any time</li>
+    </ul>
+
+    <h2>7. Voice and Conversation Data</h2>
+    <ul>
+      <li>Voice input is processed in real time to convert speech to text. It is not permanently stored.</li>
+      <li>Conversation text is temporarily stored to provide context to the AI and is automatically deleted after 90 days</li>
+      <li>Do not share sensitive personal information, passwords, financial details, or confidential information in conversations</li>
+      <li>By using the voice feature you consent to your voice being processed by Google's speech recognition service</li>
+    </ul>
+
+    <h2>8. Intellectual Property</h2>
+
+    <h3>Our intellectual property</h3>
+    <p>My Tomodachi, including its name, logo, design, AI character personas, system prompts, and all content we have created, is our intellectual property. You may not copy, reproduce, modify, distribute, or create derivative works without our written permission.</p>
+
+    <h3>Your content</h3>
+    <p>You retain ownership of the messages and content you input into the app. By using the service you grant us a limited, non-exclusive licence to process your input to provide the service. We do not claim ownership of your conversations.</p>
+
+    <h3>Feedback</h3>
+    <p>If you provide feedback or suggestions about the service, you grant us the right to use that feedback without compensation or attribution.</p>
+
+    <h2>9. Availability and Service Changes</h2>
+    <ul>
+      <li>We aim to keep My Tomodachi available but do not guarantee uninterrupted service</li>
+      <li>We may modify, suspend, or discontinue features with reasonable notice where possible</li>
+      <li>We are not liable for any loss arising from service downtime or changes</li>
+      <li>We may update these terms — continued use after changes constitutes acceptance</li>
+      <li>In the event we discontinue the service entirely, we will provide at least 30 days notice and pro-rata refunds for any prepaid subscription periods</li>
+    </ul>
+
+    <h2>10. Limitation of Liability</h2>
+    <div class="highlight-box">
+      <p>My Tomodachi is provided "as is" without warranties of any kind. To the maximum extent permitted by applicable law, we are not liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the service, including but not limited to loss of data, loss of revenue, or any other intangible losses.</p>
+    </div>
+    <p>Our total liability to you for any claim arising from the use of the service is limited to the amount you paid us in the 12 months preceding the claim, or AUD $100, whichever is greater.</p>
+    <p>Nothing in these terms excludes liability that cannot be excluded under Australian Consumer Law or other applicable mandatory laws.</p>
+
+    <h2>11. Australian Consumer Law</h2>
+    <p>Nothing in these terms is intended to exclude, restrict, or modify rights you have under the Australian Consumer Law (ACL) or other applicable legislation that cannot be excluded. If you are an Australian consumer, you may have statutory guarantees and remedies that cannot be waived by contract.</p>
+
+    <h2>12. Termination</h2>
+    <p>We may suspend or terminate your account at any time if you violate these terms, with or without notice depending on the severity of the violation. You may terminate your account at any time by emailing <a href="mailto:hello@mytomodachi.app">hello@mytomodachi.app</a> or through the in-app account deletion feature.</p>
+    <p>Upon termination, your right to use the service ends immediately. Sections relating to intellectual property, limitation of liability, and dispute resolution survive termination.</p>
+
+    <h2>13. Governing Law</h2>
+    <p>These terms are governed by the laws of Queensland, Australia. Any disputes arising from these terms or your use of the service will be subject to the exclusive jurisdiction of the courts of Queensland, Australia.</p>
+
+    <h2>14. Changes to These Terms</h2>
+    <p>We may update these Terms of Service from time to time. We will notify you of significant changes via email or in-app notification at least 14 days before they take effect. The current version is always available at mytomodachi.app/terms.</p>
+
+    <div class="contact-block">
+      <h2>Contact Us</h2>
+      <p>If you have any questions about these Terms of Service, please contact us:</p>
+      <ul>
+        <li>Email: <a href="mailto:hello@mytomodachi.app">hello@mytomodachi.app</a></li>
+        <li>Website: <a href="https://mytomodachi.app">mytomodachi.app</a></li>
+        <li>We aim to respond to all enquiries within 5 business days</li>
+      </ul>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-brand">
+      <strong>My Tomodachi</strong>
+      <span style="font-family:'Noto Serif JP',serif;font-size:0.68rem;color:var(--text-faint);">マイ・トモダチ</span>
+      <span style="color:var(--text-faint);">· mytomodachi.app</span>
+    </div>
+    <ul class="footer-links">
+      <li><a href="/privacy">Privacy</a></li>
+      <li><a href="/terms">Terms</a></li>
+      <li><a href="mailto:hello@mytomodachi.app">Contact</a></li>
+    </ul>
+  </footer>
+
+</div>
+</body>
+</html>

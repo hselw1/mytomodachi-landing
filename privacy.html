@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — My Tomodachi</title>
+<meta name="description" content="Privacy Policy for My Tomodachi — AI Japanese Conversation Practice">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:          #0d0d14;
+    --bg-card:     #13131f;
+    --bg-elevated: #1a1a2a;
+    --border:      #1e1e2e;
+    --border-soft: #2a2a3a;
+    --text:        #ffffff;
+    --text-soft:   #aaaaaa;
+    --text-muted:  #666666;
+    --text-faint:  #444444;
+    --red:         #e94560;
+    --red-faint:   rgba(233,69,96,0.12);
+    --red-border:  rgba(233,69,96,0.25);
+    --purple-light:#b38fff;
+    --radius:      12px;
+    --radius-sm:   8px;
+  }
+
+  html { font-size: 16px; scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page-wrap { position: relative; z-index: 1; }
+
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.1rem 2rem;
+    border-bottom: 1px solid var(--border);
+    background: rgba(13,13,20,0.92);
+    backdrop-filter: blur(16px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .nav-brand {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    text-decoration: none;
+    color: var(--text);
+  }
+
+  .nav-brand-en { font-size: 1rem; font-weight: 600; letter-spacing: -0.01em; }
+
+  .nav-brand-jp {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+  }
+
+  .nav-back {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    border: 1px solid var(--border-soft);
+    padding: 0.3rem 0.8rem;
+    border-radius: var(--radius-sm);
+    transition: color 0.15s, border-color 0.15s;
+  }
+
+  .nav-back:hover { color: var(--text); border-color: var(--border); }
+
+  .content {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 4rem 2rem 6rem;
+  }
+
+  .doc-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 0.75rem;
+  }
+
+  .doc-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--text);
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+  }
+
+  .doc-meta {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .doc-intro {
+    font-size: 1rem;
+    color: var(--text-soft);
+    line-height: 1.8;
+    margin-bottom: 3rem;
+    padding: 1.5rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    border-left: 3px solid var(--red);
+  }
+
+  h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    letter-spacing: -0.01em;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  h3 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-soft);
+    margin-top: 1.5rem;
+    margin-bottom: 0.6rem;
+  }
+
+  p {
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+  }
+
+  ul {
+    margin: 0.5rem 0 1rem 0;
+    padding-left: 0;
+    list-style: none;
+  }
+
+  ul li {
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+    padding: 0.25rem 0 0.25rem 1.2rem;
+    position: relative;
+  }
+
+  ul li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--text-faint);
+    font-size: 0.8rem;
+  }
+
+  .highlight-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+    margin: 1.5rem 0;
+  }
+
+  .highlight-box p { margin-bottom: 0; }
+
+  .contact-block {
+    background: var(--bg-card);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .contact-block h2 { margin-top: 0; }
+
+  a { color: var(--red); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  footer {
+    padding: 1.75rem 2rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-brand {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    font-size: 0.83rem;
+    color: var(--text-muted);
+  }
+
+  .footer-brand strong { color: var(--text); font-weight: 600; }
+
+  .footer-links { display: flex; gap: 1.5rem; list-style: none; }
+
+  .footer-links a {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .footer-links a:hover { color: var(--text); }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <nav>
+    <a href="/" class="nav-brand">
+      <span class="nav-brand-en">My Tomodachi</span>
+      <span class="nav-brand-jp">マイ・トモダチ</span>
+    </a>
+    <a href="/" class="nav-back">← Back</a>
+  </nav>
+
+  <div class="content">
+    <p class="doc-label">Legal</p>
+    <h1 class="doc-title">Privacy Policy</h1>
+    <p class="doc-meta">Last updated: June 2026 &nbsp;·&nbsp; Effective: June 2026</p>
+
+    <div class="doc-intro">
+      This Privacy Policy explains how My Tomodachi ("we", "us", or "our") collects, uses, and protects information when you use our app and website. We have written this in plain English — if anything is unclear, please email us at <a href="mailto:hello@mytomodachi.app">hello@mytomodachi.app</a>.
+    </div>
+
+    <h2>1. Who We Are</h2>
+    <p>My Tomodachi is a Japanese language conversation practice app. We are an independent developer based in Australia. You can contact us at <a href="mailto:hello@mytomodachi.app">hello@mytomodachi.app</a>.</p>
+
+    <h2>2. What Information We Collect</h2>
+
+    <h3>Information you provide directly</h3>
+    <ul>
+      <li>Email address — if you join our waitlist or create an account</li>
+      <li>Name or username — if you create an account</li>
+      <li>Messages you type or speak during conversations in the app</li>
+    </ul>
+
+    <h3>Information collected automatically</h3>
+    <ul>
+      <li>Voice input — captured temporarily to convert speech to text. Not stored permanently.</li>
+      <li>Conversation history — stored to allow your AI conversation partner to remember context. Automatically deleted after 90 days.</li>
+      <li>Streak and session data — stored locally on your device (not on our servers) to track your daily practice streak</li>
+      <li>Basic usage analytics — which features you use, session length, which personas you practice with. This data is anonymous and contains no personal information.</li>
+      <li>Device information — device type, operating system version, app version. Used for bug fixing and compatibility.</li>
+    </ul>
+
+    <h3>Information we do NOT collect</h3>
+    <ul>
+      <li>We do not collect your precise location</li>
+      <li>We do not access your contacts, photos, or other apps</li>
+      <li>We do not collect financial information directly (payments handled by Apple)</li>
+      <li>We do not sell your personal information to anyone, ever</li>
+    </ul>
+
+    <h2>3. How We Use Your Information</h2>
+    <ul>
+      <li>To power AI conversation responses via Anthropic Claude</li>
+      <li>To synthesise speech audio via Google Cloud Text-to-Speech</li>
+      <li>To transcribe your voice via Google Speech-to-Text (on-device on iOS)</li>
+      <li>To send you early access or launch notifications if you joined the waitlist</li>
+      <li>To improve the app — understanding which features are used helps us build better ones</li>
+      <li>To diagnose bugs and technical issues</li>
+      <li>To process subscription payments via Apple's in-app purchase system</li>
+    </ul>
+
+    <h2>4. Third-Party Services</h2>
+    <p>My Tomodachi uses the following third-party services. Each has its own privacy policy.</p>
+
+    <h3>Anthropic (Claude AI)</h3>
+    <p>Your conversation messages are sent to Anthropic's API to generate responses. Anthropic processes this data to return a reply. We do not send your name, email, or account information to Anthropic — only the conversation text. Anthropic's privacy policy is at <a href="https://www.anthropic.com/privacy" target="_blank">anthropic.com/privacy</a>.</p>
+
+    <h3>Google Cloud</h3>
+    <p>We use Google Cloud Text-to-Speech to convert AI responses to audio. Text is sent to Google's servers to generate audio and is not retained. Google's privacy policy is at <a href="https://policies.google.com/privacy" target="_blank">policies.google.com/privacy</a>.</p>
+
+    <h3>Apple</h3>
+    <p>If you purchase a subscription, payment is processed entirely by Apple through their App Store. We do not see or store your payment details. Apple's privacy policy is at <a href="https://www.apple.com/privacy" target="_blank">apple.com/privacy</a>.</p>
+
+    <h3>RevenueCat</h3>
+    <p>We use RevenueCat to manage in-app subscriptions. RevenueCat receives your Apple subscriber ID and subscription status to verify your access level. RevenueCat's privacy policy is at <a href="https://www.revenuecat.com/privacy" target="_blank">revenuecat.com/privacy</a>.</p>
+
+    <h3>Mixpanel (Analytics)</h3>
+    <p>We use Mixpanel to collect anonymous usage analytics — which features are used, session length, and similar metrics. No personally identifiable information is included in analytics events. Conversation content is never sent to analytics services. Mixpanel's privacy policy is at <a href="https://mixpanel.com/legal/privacy-policy" target="_blank">mixpanel.com/legal/privacy-policy</a>.</p>
+
+    <h3>Render and Vercel</h3>
+    <p>Our backend server runs on Render and our web app is hosted on Vercel. These services may process data as part of normal server operations. Both are GDPR-compliant infrastructure providers.</p>
+
+    <h2>5. Data Storage and Security</h2>
+    <ul>
+      <li>Conversation history is stored on our secure servers and automatically deleted after 90 days</li>
+      <li>Streak and session data is stored locally on your device only — we cannot access it</li>
+      <li>All data transmission uses HTTPS encryption</li>
+      <li>Our API is protected by Cloudflare and rate limiting</li>
+      <li>We do not store voice recordings — audio is processed in real time and discarded</li>
+      <li>We do not store payment information — this is handled entirely by Apple</li>
+    </ul>
+
+    <h2>6. Data Retention</h2>
+    <ul>
+      <li>Conversation history — automatically deleted after 90 days of inactivity</li>
+      <li>Account data — retained while your account is active, deleted within 30 days of account deletion request</li>
+      <li>Waitlist email addresses — retained until you unsubscribe or request deletion</li>
+      <li>Analytics data — retained in aggregate anonymous form for up to 2 years</li>
+    </ul>
+
+    <h2>7. Children's Privacy</h2>
+    <p>My Tomodachi is not directed at children under the age of 13. We do not knowingly collect personal information from children under 13. If we become aware that a child under 13 has provided personal information, we will delete it immediately.</p>
+    <p>Users aged 13–17 may use the app with parental consent. Certain content (including references to alcohol by AI characters) is restricted regardless of age, as we cannot verify user ages.</p>
+
+    <h2>8. Your Rights</h2>
+    <p>Depending on your location, you may have the following rights regarding your personal data:</p>
+    <ul>
+      <li><strong style="color:var(--text-soft);">Access</strong> — request a copy of the data we hold about you</li>
+      <li><strong style="color:var(--text-soft);">Correction</strong> — request correction of inaccurate data</li>
+      <li><strong style="color:var(--text-soft);">Deletion</strong> — request deletion of your account and all associated data</li>
+      <li><strong style="color:var(--text-soft);">Portability</strong> — request your data in a machine-readable format</li>
+      <li><strong style="color:var(--text-soft);">Objection</strong> — object to certain types of processing</li>
+      <li><strong style="color:var(--text-soft);">Withdrawal of consent</strong> — withdraw consent at any time where processing is based on consent</li>
+    </ul>
+    <p>To exercise any of these rights, email <a href="mailto:hello@mytomodachi.app">hello@mytomodachi.app</a>. We will respond within 30 days.</p>
+
+    <h2>9. Account and Data Deletion</h2>
+    <p>You can delete your account and all associated data at any time:</p>
+
+    <div class="highlight-box">
+      <h3 style="margin-top:0;">In the app (once available)</h3>
+      <p>Settings → Account → Delete Account. This permanently deletes your account, conversation history, and all personal data from our servers within 30 days.</p>
+    </div>
+
+    <div class="highlight-box">
+      <h3 style="margin-top:0;">By email</h3>
+      <p>Email <a href="mailto:hello@mytomodachi.app">hello@mytomodachi.app</a> with the subject "Delete My Account" and we will delete your account and all associated data within 30 days.</p>
+    </div>
+
+    <p>Note: Streak and session data stored locally on your device can be cleared by deleting the app. We do not have access to locally stored data.</p>
+
+    <h2>10. International Data Transfers</h2>
+    <p>My Tomodachi is operated from Australia. Our servers are located in the United States (Render, Vercel). By using the app, you consent to your information being transferred to and processed in the United States and other countries where our service providers operate.</p>
+    <p>Where we transfer data outside Australia or the EEA, we ensure appropriate safeguards are in place in accordance with applicable privacy laws.</p>
+
+    <h2>11. Australian Privacy Act</h2>
+    <p>We comply with the Australian Privacy Act 1988 and the Australian Privacy Principles (APPs). If you are located in Australia and have a complaint about our handling of your personal information, you may contact the Office of the Australian Information Commissioner (OAIC) at <a href="https://www.oaic.gov.au" target="_blank">oaic.gov.au</a>.</p>
+
+    <h2>12. GDPR (European Users)</h2>
+    <p>If you are located in the European Economic Area or United Kingdom, you have additional rights under the General Data Protection Regulation (GDPR) and UK GDPR. Our legal basis for processing your personal data is:</p>
+    <ul>
+      <li>Contract performance — to provide the service you signed up for</li>
+      <li>Legitimate interests — to improve the app and ensure security</li>
+      <li>Consent — for marketing emails, which you can withdraw at any time</li>
+    </ul>
+    <p>As a data subject in the EU or EEA, you also have the right to lodge a complaint with your local data protection supervisory authority if you believe we have not handled your personal data in accordance with GDPR. A full list of EU supervisory authorities is available at <a href="https://ec.europa.eu/justice/article-29/structure/data-protection-authorities/index_en.htm" target="_blank">ec.europa.eu</a>. UK users may contact the Information Commissioner's Office (ICO) at <a href="https://ico.org.uk" target="_blank">ico.org.uk</a>.</p>
+    <p>We will respond to GDPR-related requests within 30 days. In complex cases we may extend this by a further 60 days with notice.</p>
+
+    <h2>13. California Privacy Rights (CCPA)</h2>
+    <p>If you are a California resident, the California Consumer Privacy Act (CCPA) gives you specific rights regarding your personal information:</p>
+    <ul>
+      <li><strong style="color:var(--text-soft);">Right to know</strong> — you may request disclosure of the categories and specific pieces of personal information we have collected about you</li>
+      <li><strong style="color:var(--text-soft);">Right to delete</strong> — you may request deletion of your personal information, subject to certain exceptions</li>
+      <li><strong style="color:var(--text-soft);">Right to opt out of sale</strong> — we do not sell your personal information to third parties, and have not done so in the preceding 12 months</li>
+      <li><strong style="color:var(--text-soft);">Right to non-discrimination</strong> — we will not discriminate against you for exercising your CCPA rights</li>
+    </ul>
+    <p>To exercise your California privacy rights, email <a href="mailto:hello@mytomodachi.app">hello@mytomodachi.app</a> with the subject "California Privacy Request". We will respond within 45 days.</p>
+
+    <h2>14. Other International Users</h2>
+    <p>My Tomodachi is available globally. While our primary compliance framework is Australian privacy law and GDPR, we have designed our data practices to be consistent with broadly accepted international privacy principles:</p>
+    <ul>
+      <li><strong style="color:var(--text-soft);">Canada (PIPEDA)</strong> — we collect only what is necessary, are transparent about our practices, and allow access and correction of personal data</li>
+      <li><strong style="color:var(--text-soft);">Brazil (LGPD)</strong> — Brazilian users have rights equivalent to those described in Section 8 of this policy and may exercise them by contacting us</li>
+      <li><strong style="color:var(--text-soft);">Japan (APPI)</strong> — we handle personal information with care consistent with Japan's Act on the Protection of Personal Information</li>
+      <li><strong style="color:var(--text-soft);">South Korea (PIPA)</strong> — we apply appropriate safeguards for Korean users consistent with the Personal Information Protection Act</li>
+    </ul>
+    <p>Regardless of your location, you may always contact us at <a href="mailto:hello@mytomodachi.app">hello@mytomodachi.app</a> to exercise any privacy rights applicable to you under your local laws.</p>
+
+    <h2>15. Changes to This Policy</h2>
+    <p>We may update this Privacy Policy from time to time. When we do, we will update the "Last updated" date at the top of this page. For significant changes, we will notify you via email or in-app notification. Continued use of the app after changes constitutes acceptance of the updated policy.</p>
+
+    <div class="contact-block">
+      <h2>Contact Us</h2>
+      <p>If you have any questions about this Privacy Policy or how we handle your data, please contact us:</p>
+      <ul>
+        <li>Email: <a href="mailto:hello@mytomodachi.app">hello@mytomodachi.app</a></li>
+        <li>Website: <a href="https://mytomodachi.app">mytomodachi.app</a></li>
+        <li>Response time: within 30 days for privacy requests, usually much sooner</li>
+      </ul>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-brand">
+      <strong>My Tomodachi</strong>
+      <span style="font-family:'Noto Serif JP',serif;font-size:0.68rem;color:var(--text-faint);">マイ・トモダチ</span>
+      <span style="color:var(--text-faint);">· mytomodachi.app</span>
+    </div>
+    <ul class="footer-links">
+      <li><a href="/privacy">Privacy</a></li>
+      <li><a href="/terms">Terms</a></li>
+      <li><a href="mailto:hello@mytomodachi.app">Contact</a></li>
+    </ul>
+  </footer>
+
+</div>
+</body>
+</html>
