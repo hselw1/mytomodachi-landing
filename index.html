@@ -893,29 +893,146 @@
   .fade-in.visible { opacity: 1; transform: translateY(0); }
 
   /* ── RESPONSIVE ── */
+  /* ── TABLET ── */
   @media (max-width: 768px) {
+    nav { padding: 1rem 1.25rem; }
+
     .hero {
       grid-template-columns: 1fr;
-      padding: 3rem 1.5rem 2rem;
-      gap: 3rem;
+      padding: 2.5rem 1.25rem 2rem;
+      gap: 2.5rem;
     }
 
     .hero-visual { order: -1; }
-    .phone-frame { width: 220px; }
-    .badge-tl { left: -10px; }
-    .badge-br { right: -10px; }
-    .features-grid { grid-template-columns: 1fr 1fr; }
-    .how-steps { grid-template-columns: 1fr; }
+
+    .phone-frame { width: 200px; }
+
+    .badge-tl { left: -8px; top: 10px; }
+    .badge-br { right: -8px; bottom: 30px; }
+
+    .float-badge {
+      font-size: 0.65rem;
+      padding: 5px 8px;
+      gap: 6px;
+    }
+
+    .badge-icon { width: 20px; height: 20px; font-size: 10px; }
+
+    .stats-strip {
+      gap: 1rem;
+      padding: 1rem 1.25rem;
+      justify-content: flex-start;
+    }
+
+    .features {
+      padding: 3rem 1.25rem;
+    }
+
+    .features-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+
+    .feature-card { padding: 1.2rem; }
+
+    .personas { padding: 3rem 1.25rem; }
+
+    .how { padding: 3rem 1.25rem; }
+
+    .how-steps { grid-template-columns: 1fr; gap: 1.5rem; }
     .how-steps::before { display: none; }
+
+    .cta-section { padding: 3rem 1.25rem; }
     .cta-form { flex-direction: column; }
+    .cta-section::before { font-size: 180px; }
+
     .form-row { flex-direction: column; }
-    nav { padding: 1rem 1.5rem; }
-    .stats-strip { gap: 1.5rem; }
-    footer { flex-direction: column; align-items: flex-start; }
+
+    footer {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 1.25rem;
+      gap: 0.75rem;
+    }
+
+    .footer-links { gap: 1rem; }
   }
 
-  @media (max-width: 500px) {
-    .features-grid { grid-template-columns: 1fr; }
+  /* ── IPHONE 14 AND SIMILAR (390px) ── */
+  @media (max-width: 430px) {
+    nav { padding: 0.875rem 1rem; }
+
+    .nav-brand-en { font-size: 0.9rem; }
+    .nav-brand-jp { display: none; }
+    .nav-badge { font-size: 0.62rem; padding: 0.2rem 0.55rem; }
+
+    .hero {
+      padding: 2rem 1rem 1.5rem;
+      gap: 2rem;
+    }
+
+    .hero-eyebrow { font-size: 0.65rem; margin-bottom: 1rem; }
+
+    .hero-title { font-size: 2rem; }
+
+    .hero-title-sub { font-size: 1.1rem; margin-bottom: 1rem; }
+
+    .hero-desc { font-size: 0.88rem; margin-bottom: 1.75rem; }
+
+    .phone-frame { width: 180px; }
+
+    .badge-tl { display: none; }
+    .badge-br { display: none; }
+
+    .form-input { height: 44px; font-size: 0.88rem; }
+    .form-btn { height: 44px; font-size: 0.85rem; padding: 0 1rem; }
+
+    .stats-strip {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.6rem;
+      padding: 1rem;
+    }
+
+    .stat-item { font-size: 0.78rem; }
+
+    .features { padding: 2.5rem 1rem; }
+
+    .section-title { font-size: 1.5rem; }
+    .section-sub { font-size: 0.88rem; margin-bottom: 2rem; }
+
+    .features-grid { grid-template-columns: 1fr; gap: 0.75rem; }
+
+    .feature-card { padding: 1.1rem; }
+    .feature-title { font-size: 0.88rem; }
+    .feature-desc { font-size: 0.8rem; }
+    .feature-icon-wrap { width: 36px; height: 36px; font-size: 16px; margin-bottom: 0.75rem; }
+
+    .personas { padding: 2.5rem 1rem; }
+
+    .persona-card { flex: 0 0 160px; padding: 1.1rem 1rem; }
+    .persona-card-avatar { width: 38px; height: 38px; }
+    .persona-card-name { font-size: 0.85rem; }
+    .persona-card-desc { font-size: 0.72rem; }
+
+    .how { padding: 2.5rem 1rem; }
+    .how-step { text-align: left; }
+    .step-num { margin: 0 0 1rem 0; }
+
+    .cta-section { padding: 2.5rem 1rem; }
+    .cta-title { font-size: 1.6rem; }
+    .cta-sub { font-size: 0.88rem; margin-bottom: 1.75rem; }
+    .cta-input { height: 44px; font-size: 0.88rem; }
+    .cta-btn { height: 44px; font-size: 0.85rem; }
+    .cta-section::before { display: none; }
+
+    footer { padding: 1rem; }
+    .footer-links { flex-wrap: wrap; gap: 0.75rem; }
+    .footer-links a { font-size: 0.75rem; }
+  }
+
+  /* ── IPHONE SE (375px and below) ── */
+  @media (max-width: 375px) {
+    .hero-title { font-size: 1.8rem; }
+    .phone-frame { width: 160px; }
+    .persona-card { flex: 0 0 150px; }
   }
 </style>
 </head>
