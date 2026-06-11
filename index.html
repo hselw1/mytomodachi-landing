@@ -1425,12 +1425,14 @@
     }
 
     const callbackName = 'mc_cb_' + Date.now();
-    const url = MAILCHIMP_URL.replace('/post-json?', '/post-json?').replace('&c=?', '') + '&EMAIL=' + encodeURIComponent(email) + '&c=' + callbackName;
+    const url = MAILCHIMP_URL.replace('&c=?', '') + '&EMAIL=' + encodeURIComponent(email) + '&c=' + callbackName;
+
+    const script = document.createElement('script');
 
     window[callbackName] = function(data) {
       delete window[callbackName];
-      document.head.removeChild(script);
-      if (data.result === 'success' || data.msg.includes('already subscribed')) {
+      if (document.head.contains(script)) document.head.removeChild(script);
+      if (data.result === 'success' || (data.msg && data.msg.includes('already subscribed'))) {
         btn.closest('form').style.opacity = '0';
         btn.closest('form').style.transition = 'opacity 0.3s ease';
         setTimeout(() => {
@@ -1441,12 +1443,13 @@
       } else {
         btn.disabled = false;
         btn.textContent = btn.dataset.label || 'Get Early Access';
-        const msg = data.msg.includes('already subscribed') ? 'You\'re already on the list!' : 'Something went wrong. Try again?';
+        const msg = data.msg && data.msg.includes('already subscribed')
+          ? 'You\'re already on the list!'
+          : 'Something went wrong. Try again?';
         if (errorEl) { errorEl.textContent = msg; errorEl.classList.add('visible'); }
       }
     };
 
-    const script = document.createElement('script');
     script.src = url;
     script.onerror = function() {
       btn.disabled = false;
