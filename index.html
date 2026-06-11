@@ -1401,6 +1401,17 @@
 <script>
   const MAILCHIMP_URL = 'https://app.us14.list-manage.com/subscribe/post-json?u=f4c5a780ff143cf0ccceff6b8&id=2b4e65529d&f_id=007354e5f0&c=?';
 
+  function showSuccess(btn, successEl, noteEl) {
+    const form = btn.closest('form');
+    form.style.opacity = '0';
+    form.style.transition = 'opacity 0.3s ease';
+    setTimeout(() => {
+      form.style.display = 'none';
+      successEl.classList.add('visible');
+      if (noteEl) noteEl.style.display = 'none';
+    }, 300);
+  }
+
   function isValidEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
   }
