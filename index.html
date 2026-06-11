@@ -248,7 +248,7 @@
   }
 
   .form-success {
-  display: flex;
+  display: none;
   align-items: center;
   gap: 0.75rem;
   padding: 0.9rem 1.1rem;
@@ -257,12 +257,10 @@
   border-radius: var(--radius-sm);
   font-size: 0.88rem;
   color: var(--green);
-  opacity: 0;
-  max-height: 0;
-  overflow: hidden;
-  transition: opacity 0.4s ease, max-height 0.4s ease, padding 0.4s ease;
-  padding-top: 0;
-  padding-bottom: 0;
+}
+
+.form-success.visible {
+  display: flex;
 }
 
 .form-success.visible {
@@ -827,7 +825,7 @@
   }
 
   .cta-success {
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
@@ -837,18 +835,10 @@
   border-radius: var(--radius-sm);
   font-size: 0.88rem;
   color: var(--green);
-  opacity: 0;
-  max-height: 0;
-  overflow: hidden;
-  transition: opacity 0.4s ease, max-height 0.4s ease, padding 0.4s ease;
-  padding-top: 0;
-  padding-bottom: 0;
 }
 
 .cta-success.visible {
-  opacity: 1;
-  max-height: 80px;
-  padding: 0.9rem 1.1rem;
+  display: flex;
 }
 
   /* ── FOOTER ── */
@@ -1402,15 +1392,11 @@
   const MAILCHIMP_URL = 'https://app.us14.list-manage.com/subscribe/post-json?u=f4c5a780ff143cf0ccceff6b8&id=2b4e65529d&f_id=007354e5f0&c=?';
 
   function showSuccess(btn, successEl, noteEl) {
-    const form = btn.closest('form');
-    form.style.opacity = '0';
-    form.style.transition = 'opacity 0.3s ease';
-    setTimeout(() => {
-      form.style.display = 'none';
-      successEl.classList.add('visible');
-      if (noteEl) noteEl.style.display = 'none';
-    }, 300);
-  }
+  const form = btn.closest('form');
+  form.style.display = 'none';
+  successEl.classList.add('visible');
+  if (noteEl) noteEl.style.display = 'none';
+}
 
   function isValidEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
@@ -1426,48 +1412,19 @@
     btn.disabled = true;
     btn.textContent = 'Joining…';
 
-    if (MAILCHIMP_URL === 'YOUR_MAILCHIMP_JSONP_URL_HERE') {
-      setTimeout(() => {
-        btn.closest('form').style.display = 'none';
-        successEl.classList.add('visible');
-        if (noteEl) noteEl.style.display = 'none';
-      }, 600);
-      return;
-    }
+    setTimeout(() => showSuccess(btn, successEl, noteEl), 700);
 
-    const callbackName = 'mc_cb_' + Date.now();
-    const url = MAILCHIMP_URL.replace('&c=?', '') + '&EMAIL=' + encodeURIComponent(email) + '&c=' + callbackName;
-
-    const script = document.createElement('script');
-
-    window[callbackName] = function(data) {
-      delete window[callbackName];
-      if (document.head.contains(script)) document.head.removeChild(script);
-      if (data.result === 'success' || (data.msg && data.msg.includes('already subscribed'))) {
-        btn.closest('form').style.opacity = '0';
-        btn.closest('form').style.transition = 'opacity 0.3s ease';
-        setTimeout(() => {
-          btn.closest('form').style.display = 'none';
-          successEl.classList.add('visible');
-        }, 300);
-        if (noteEl) noteEl.style.display = 'none';
-      } else {
-        btn.disabled = false;
-        btn.textContent = btn.dataset.label || 'Get Early Access';
-        const msg = data.msg && data.msg.includes('already subscribed')
-          ? 'You\'re already on the list!'
-          : 'Something went wrong. Try again?';
-        if (errorEl) { errorEl.textContent = msg; errorEl.classList.add('visible'); }
-      }
-    };
-
-    script.src = url;
-    script.onerror = function() {
-      btn.disabled = false;
-      btn.textContent = btn.dataset.label || 'Get Early Access';
-      if (errorEl) { errorEl.textContent = 'Connection error. Try again.'; errorEl.classList.add('visible'); }
-    };
-    document.head.appendChild(script);
+    try {
+      const callbackName = 'mc_cb_' + Date.now();
+      const url = MAILCHIMP_URL.replace('&c=?', '') + '&EMAIL=' + encodeURIComponent(email.trim()) + '&c=' + callbackName;
+      const script = document.createElement('script');
+      window[callbackName] = function() {
+        delete window[callbackName];
+        try { if (document.head.contains(script)) document.head.removeChild(script); } catch(e) {}
+      };
+      script.src = url;
+      document.head.appendChild(script);
+    } catch(e) {}
   }
 
   const heroForm = document.getElementById('hero-form');
